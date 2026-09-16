@@ -1,0 +1,1560 @@
+/* ===== 治愈系星空 · 昼夜双主题 =====
+   默认白天（浅蓝天空/暖木），夜晚（深蓝紫星空/暖金）。
+   主题色全部走 CSS 变量，切换 html[data-theme] 平滑过渡。
+   源 palette 参考 src/styles/theme.ts。 */
+
+:root {
+  /* —— 白天模式（默认）—— */
+  --text-main: #7a6a52;
+  --text-soft: #9a8b74;
+  --title-color: #a4814e;
+  --title-glow: 0 0 14px rgba(255, 244, 214, 0.9);
+
+  --card-bg: rgba(255, 253, 247, 0.78);
+  --card-border: rgba(164, 129, 78, 0.3);
+  --card-shadow: 0 10px 30px rgba(120, 100, 70, 0.18);
+  --card-halo: 0 0 0 6px rgba(255, 255, 255, 0.25);
+
+  --disk-fill: #fdfaf1;
+  --disk-stroke: rgba(164, 129, 78, 0.65);
+  /* 盘面：实色底 + 极轻的深色投影（像卡片立在背景上，不是白色泛光） */
+  --disk-shadow: drop-shadow(0 8px 20px rgba(92, 74, 48, 0.16));
+  --house-arc: rgba(122, 100, 66, 0.8);
+  --zodiac-line: rgba(150, 120, 76, 0.9);
+  --zodiac-glow: rgba(168, 132, 78, 0.4);
+  --deco-ink: rgba(184, 150, 98, 0.95);
+  --deco-glow: rgba(196, 164, 110, 0.4);
+  --orbit-line: rgba(164, 129, 78, 0.34);
+  --rc-place-bg: rgba(196, 164, 110, 0.14);
+  --rc-place-border: rgba(164, 129, 78, 0.28);
+  /* 面板三按钮：深紫蓝半透明圆角 */
+  --cp-action-bg: rgba(58, 52, 112, 0.72);
+  --cp-action-border: rgba(176, 186, 228, 0.42);
+  --cp-action-color: rgba(244, 242, 255, 0.95);
+  --scroll-thumb: rgba(196, 164, 110, 0.66);
+  /* 白天滚动条滑块 = 小星星 */
+  --scroll-star: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2016%2016'%3E%3Cpath%20d='M8%201.3L9.7%205.9L14.7%206.2L10.8%209.2L12%2014.1L8%2011.5L4%2014.1L5.2%209.2L1.3%206.2L6.3%205.9Z'%20fill='%23d9a94f'/%3E%3C/svg%3E");
+  /* 夜晚滚动条滑块 = 小月亮 */
+  --scroll-moon: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2016%2016'%3E%3Cpath%20d='M11.2%201.5A7.2%207.2%200%201%200%2011.2%2014.5A5.7%205.7%200%200%201%2011.2%201.5Z'%20fill='%23cbd1f0'/%3E%3C/svg%3E");
+  --scroll-thumb-img: var(--scroll-star);
+  --scroll-thumb-w: 10px;
+  --engrave: rgba(176, 143, 92, 0.6);
+  --engrave-soft: rgba(176, 143, 92, 0.34);
+  --house-a: rgba(214, 186, 128, 0.05);
+  --house-b: rgba(255, 255, 255, 0.12);
+  --house-stroke: rgba(164, 129, 78, 0.32);
+  --cusp-line: rgba(164, 129, 78, 0.42);
+  --house-num: rgba(122, 106, 82, 0.7);
+  --center-ring: rgba(164, 129, 78, 0.28);
+  --center-text: #a4814e;
+
+  /* 相位连线：柔和淡暖色。注意 CSS 不支持 // 注释，必须用星号注释，否则会吞掉下一行变量 */
+  --asp-conj: rgba(206, 168, 86, 0.9); /* 合相 0° · 暖金 */
+  --asp-sex: rgba(104, 178, 122, 0.88); /* 六分 60° · 柔绿 */
+  --asp-sqr: rgba(216, 148, 104, 0.88); /* 四分 90° · 陶橙 */
+  --asp-tri: rgba(104, 158, 212, 0.9); /* 三分 120° · 天蓝 */
+  --asp-opp: rgba(214, 110, 100, 0.9); /* 对分 180° · 朱红 */
+  --asp-minor: rgba(196, 182, 152, 0.55); /* 次要相位 · 淡沙 */
+
+
+  --egg-border: rgba(164, 129, 78, 0.5);
+  --egg-bg: rgba(255, 255, 255, 0.4);
+
+  /* 面板与表单：白天暖白半透明 */
+  --panel-title: #a4814e;
+  --panel-text: #6d6152;
+  --panel-soft: #9a9080;
+  --panel-divider: rgba(196, 164, 110, 0.35);
+  --input-bg: rgba(255, 253, 247, 0.8);
+  --input-border: #e8dcc4;
+  --input-text: #5b5147;
+  --switch-off-bg: #ece0c8;
+  --switch-off-border: #d9c8a6;
+
+  /* 解读卡片：白天浅色毛玻璃 */
+  --rc-bg: rgba(255, 253, 247, 0.82);
+  --rc-border: rgba(164, 129, 78, 0.35);
+  --rc-shadow: 0 14px 38px rgba(120, 100, 70, 0.25);
+  --rc-title: #a4814e;
+  --rc-text: #5b5147;
+  --rc-sub: #9a8b74;
+  --rc-strong: #b0823e;
+  --rc-empty-bg: rgba(217, 154, 140, 0.14);
+  --rc-empty-text: #a9705f;
+  --close-bg: rgba(164, 129, 78, 0.15);
+  --close-color: #8a6f4a;
+
+  /* 切换按钮 */
+  --tt-bg: rgba(255, 253, 247, 0.6);
+  --tt-border: rgba(164, 129, 78, 0.35);
+  --tt-color: #7a6a52;
+  --tt-shadow: 0 6px 18px rgba(120, 100, 70, 0.2);
+
+  /* 右侧 AI 对话面板：白天暖白半透明 */
+  --chat-bg: rgba(255, 253, 247, 0.72);
+  --chat-border: rgba(164, 129, 78, 0.32);
+  --chat-shadow: 0 14px 38px rgba(120, 100, 70, 0.22);
+  --chat-title: #a4814e;
+  --chat-bubble-ai: rgba(255, 255, 255, 0.82);
+  --chat-bubble-user: rgba(232, 199, 125, 0.88);
+  --chat-bubble-user-text: #5b4326;
+  --chat-text: #5b5147;
+  --chat-soft: #9a8b74;
+  --chat-input-bg: rgba(255, 253, 247, 0.92);
+  --chat-input-border: #e3d6bd;
+  --chat-send-bg: linear-gradient(180deg, #f0d49b, #e8c77e);
+  --chat-send-text: #55432a;
+
+  --round-font: "PingFang SC", "Microsoft YaHei Rounded", "Comic Sans MS", sans-serif;
+  --serif-font: "Marcellus", "Noto Serif SC", serif;
+}
+
+[data-theme="night"] {
+  --text-main: rgba(245, 240, 230, 0.65);
+  --text-soft: rgba(245, 240, 230, 0.5);
+  --title-color: #e8c77e;
+  --title-glow: 0 0 18px rgba(232, 199, 125, 0.35), 0 0 46px rgba(232, 199, 125, 0.12);
+
+  --card-bg: rgba(38, 36, 78, 0.55);
+  --card-border: rgba(160, 172, 220, 0.35);
+  --card-shadow: 0 10px 32px rgba(10, 8, 30, 0.45);
+  --card-halo: 0 0 0 6px rgba(160, 172, 220, 0.05);
+
+  --disk-fill: #f6f5fa;
+  --disk-stroke: rgba(126, 136, 164, 0.7);
+  --disk-shadow: drop-shadow(0 8px 22px rgba(8, 8, 30, 0.38));
+  --house-arc: rgba(104, 100, 92, 0.82);
+  --zodiac-line: rgba(186, 148, 96, 0.95);
+  --zodiac-glow: rgba(198, 160, 104, 0.45);
+  --deco-ink: rgba(158, 146, 132, 0.95);
+  --deco-glow: rgba(200, 186, 160, 0.4);
+  --orbit-line: rgba(126, 136, 164, 0.32);
+  --scroll-thumb: rgba(170, 180, 226, 0.66);
+  --scroll-thumb-img: var(--scroll-moon);
+  --engrave: rgba(118, 128, 158, 0.6);
+  --engrave-soft: rgba(118, 128, 158, 0.34);
+  --rc-place-bg: rgba(232, 199, 125, 0.12);
+  --rc-place-border: rgba(232, 199, 125, 0.3);
+  --cp-action-bg: rgba(46, 42, 96, 0.62);
+  --cp-action-border: rgba(176, 186, 228, 0.42);
+  --cp-action-color: rgba(244, 242, 255, 0.95);
+  --house-a: rgba(148, 158, 196, 0.05);
+  --house-b: rgba(255, 255, 255, 0.22);
+  --house-stroke: rgba(116, 124, 148, 0.3);
+  --cusp-line: rgba(116, 124, 148, 0.4);
+  --house-num: rgba(104, 112, 138, 0.78);
+  --center-ring: rgba(126, 136, 164, 0.3);
+  --center-text: #8d94b8;
+
+  /* 相位连线：夜晚同样柔和淡暖 */
+  --asp-conj: rgba(230, 198, 110, 0.9); /* 合相 0° · 暖金 */
+  --asp-sex: rgba(146, 206, 160, 0.88); /* 六分 60° · 柔绿 */
+  --asp-sqr: rgba(240, 174, 130, 0.88); /* 四分 90° · 陶橙 */
+  --asp-tri: rgba(146, 188, 228, 0.9); /* 三分 120° · 天蓝 */
+  --asp-opp: rgba(236, 140, 128, 0.9); /* 对分 180° · 朱红 */
+  --asp-minor: rgba(176, 168, 148, 0.55); /* 次要相位 · 淡沙 */
+
+
+  --egg-border: rgba(232, 199, 125, 0.5);
+  --egg-bg: rgba(232, 199, 125, 0.06);
+
+  /* 面板与表单：夜晚深色半透明 */
+  --panel-title: #cfd4ee;
+  --panel-text: rgba(228, 231, 248, 0.82);
+  --panel-soft: rgba(210, 214, 238, 0.55);
+  --panel-divider: rgba(160, 172, 220, 0.3);
+  --input-bg: rgba(26, 26, 58, 0.5);
+  --input-border: rgba(150, 162, 212, 0.4);
+  --input-text: rgba(240, 241, 252, 0.92);
+  --switch-off-bg: rgba(58, 58, 104, 0.6);
+  --switch-off-border: rgba(150, 162, 212, 0.45);
+
+  /* 右侧 AI 对话面板：夜晚深紫蓝半透明 */
+  --chat-bg: rgba(38, 36, 78, 0.6);
+  --chat-border: rgba(160, 172, 220, 0.35);
+  --chat-shadow: 0 14px 38px rgba(10, 8, 30, 0.45);
+  --chat-title: #e8c77e;
+  --chat-bubble-ai: rgba(46, 44, 92, 0.72);
+  --chat-bubble-user: rgba(232, 199, 125, 0.2);
+  --chat-bubble-user-text: #f3ead0;
+  --chat-text: rgba(232, 234, 248, 0.9);
+  --chat-soft: rgba(210, 214, 238, 0.55);
+  --chat-input-bg: rgba(26, 26, 58, 0.55);
+  --chat-input-border: rgba(150, 162, 212, 0.4);
+  --chat-send-bg: linear-gradient(180deg, #f0d49b, #e8c77e);
+  --chat-send-text: #55432a;
+
+  /* 解读卡片：夜晚深色毛玻璃 */
+  --rc-bg: rgba(42, 39, 82, 0.72);
+  --rc-border: rgba(232, 199, 125, 0.35);
+  --rc-shadow: 0 14px 38px rgba(8, 6, 26, 0.55);
+  --rc-title: #e8c77e;
+  --rc-text: rgba(245, 240, 230, 0.88);
+  --rc-sub: rgba(245, 240, 230, 0.6);
+  --rc-strong: #f0d49b;
+  --rc-empty-bg: rgba(217, 154, 140, 0.12);
+  --rc-empty-text: #e8c2bc;
+  --close-bg: rgba(232, 199, 125, 0.16);
+  --close-color: #f0d49b;
+
+  --tt-bg: rgba(42, 39, 82, 0.65);
+  --tt-border: rgba(232, 199, 125, 0.35);
+  --tt-color: #f0d49b;
+  --tt-shadow: 0 6px 18px rgba(8, 6, 26, 0.5);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
+}
+[data-theme="night"] {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f2ead8;
+  color: var(--text-main);
+  font-family: var(--round-font);
+  transition: color 0.7s ease;
+}
+
+/* ===== 动态背景层（星盘之下，不遮挡内容）===== */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.bg-day,
+.bg-night {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: opacity 0.9s ease;
+}
+.bg-day {
+  opacity: 1;
+}
+.bg-night {
+  opacity: 0;
+}
+[data-theme="night"] .bg-day {
+  opacity: 0;
+}
+[data-theme="night"] .bg-night {
+  opacity: 1;
+}
+
+/* —— 白天：小白鸽群（参考图背景之上唯一的动态元素）—— */
+.day-sky {
+  position: absolute;
+  inset: 0;
+  opacity: 1;
+  transition: opacity 0.9s ease;
+}
+[data-theme="night"] .day-sky {
+  opacity: 0;
+}
+.dove {
+  position: absolute;
+  left: -60px;
+  animation-name: fly;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.dove svg {
+  display: block;
+  animation: bob 3.2s ease-in-out infinite;
+}
+@keyframes fly {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(100vw + 120px));
+  }
+}
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+/* —— 夜晚：星云参考图 + 偶发流星 —— */
+.night-sky {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+[data-theme="night"] .night-sky {
+  opacity: 1;
+}
+.meteor {
+  position: absolute;
+  top: 12%;
+  left: 80%;
+  width: 2.8px;
+  height: 168px;
+  /* 清晰细线 + 渐变透明光尾：不是模糊色块 */
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 248, 231, 0) 0%,
+    rgba(255, 248, 231, 0.28) 38%,
+    rgba(255, 251, 238, 0.75) 74%,
+    rgba(255, 253, 244, 0.98) 100%
+  );
+  border-radius: 2px;
+  opacity: 0;
+  transform: rotate(38deg);
+  animation: meteor 8s ease-in infinite;
+}
+.meteor::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -1px;
+  width: 5px;
+  height: 5px;
+  margin-left: -2.5px;
+  border-radius: 50%;
+  background: #fffdf3;
+  box-shadow: 0 0 9px 2px rgba(255, 246, 220, 0.75);
+}
+.meteor.m-2 {
+  top: 5%;
+  left: 58%;
+  height: 142px;
+  animation-delay: 2.4s;
+  animation-duration: 10s;
+}
+.meteor.m-3 {
+  top: 19%;
+  left: 92%;
+  height: 186px;
+  animation-delay: 4.6s;
+  animation-duration: 9s;
+}
+.meteor.m-4 {
+  top: 27%;
+  left: 68%;
+  height: 152px;
+  animation-delay: 6.9s;
+  animation-duration: 11.5s;
+}
+.meteor.m-5 {
+  top: 3%;
+  left: 36%;
+  height: 176px;
+  animation-delay: 9.1s;
+  animation-duration: 10.5s;
+}
+.meteor.m-6 {
+  top: 15%;
+  left: 12%;
+  height: 158px;
+  animation-delay: 11.4s;
+  animation-duration: 12.5s;
+}
+.meteor.m-7 {
+  top: 33%;
+  left: 48%;
+  height: 196px;
+  animation-delay: 13.6s;
+  animation-duration: 11s;
+}
+.meteor.m-8 {
+  top: 8%;
+  left: 74%;
+  height: 164px;
+  animation-delay: 5.8s;
+  animation-duration: 13s;
+}
+@keyframes meteor {
+  0% {
+    transform: translate(0, 0) rotate(38deg);
+    opacity: 0;
+  }
+  3% {
+    opacity: 1;
+  }
+  9% {
+    transform: translate(-330px, 264px) rotate(38deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-330px, 264px) rotate(38deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dove,
+  .dove svg,
+  .meteor {
+    animation: none;
+  }
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+.container {
+  width: min(1200px, 96vw);
+  margin: 0 auto;
+}
+
+/* ===== 昼夜切换按钮 ===== */
+.theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 20;
+  padding: 13px 26px;
+  font-family: var(--round-font);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--tt-color);
+  background: var(--tt-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid var(--tt-border);
+  border-radius: 999px;
+  box-shadow: var(--tt-shadow);
+  cursor: pointer;
+  transition: color 0.7s ease, background 0.7s ease, border-color 0.7s ease, transform 0.18s ease;
+}
+.theme-toggle:hover {
+  transform: translateY(-1px);
+}
+.theme-toggle:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* ===== 顶部 ===== */
+.masthead {
+  padding: 34px 0 4px;
+  text-align: center;
+}
+.masthead h1 {
+  margin: 0;
+  font-family: var(--serif-font);
+  font-weight: 600;
+  font-size: clamp(30px, 4.6vw, 50px);
+  color: var(--title-color);
+  letter-spacing: 0.08em;
+  text-shadow: var(--title-glow);
+  transition: color 0.7s ease, text-shadow 0.7s ease;
+}
+.masthead .sub {
+  margin: 8px 0 0;
+  color: var(--text-soft);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  transition: color 0.7s ease;
+}
+
+/* ===== 出生信息条 ===== */
+.birth-bar {
+  margin-top: 12px;
+}
+/* 品牌名：**低调地**待在表单上方左侧，不抢视觉焦点 */
+.brandmark {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding-left: 4px;
+}
+.brandmark-name {
+  font-family: var(--serif-font);
+  font-size: 20px;
+  letter-spacing: 0.14em;
+  color: var(--title-color);
+  text-shadow: var(--title-glow);
+  transition: color 0.7s ease, text-shadow 0.7s ease;
+}
+.brandmark-en {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: var(--text-soft);
+  opacity: 0.75;
+  transition: color 0.7s ease;
+}
+.birth-bar .form-panel {
+  /* 深紫蓝半透明，融入昼夜两套背景 */
+  background: rgba(45, 42, 88, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(176, 186, 228, 0.4);
+  border-radius: 16px;
+  padding: 10px 18px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 18px;
+  box-shadow: 0 10px 30px rgba(20, 16, 48, 0.3);
+  transition: background 0.7s ease, border-color 0.7s ease, box-shadow 0.7s ease;
+}
+.birth-bar .form-panel h2 {
+  margin: 0;
+  font-size: 19px;
+  color: #f0d49b;
+}
+.birth-bar .panel-note {
+  flex: 1 1 auto;
+  margin: 0;
+  font-size: 12.5px;
+  color: rgba(206, 212, 240, 0.65);
+  text-align: right;
+  min-width: 200px;
+}
+.birth-bar form {
+  flex: 1 1 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  align-items: flex-end;
+}
+.birth-bar .field {
+  flex: 1 1 180px;
+  margin: 0;
+}
+.birth-bar .field label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 13px;
+  color: rgba(206, 212, 240, 0.65);
+  transition: color 0.7s ease;
+}
+.birth-bar .field input {
+  width: 100%;
+  font-family: var(--round-font);
+  font-size: 15px;
+  color: #f2f3fb;
+  padding: 9px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(190, 200, 240, 0.4);
+  border-radius: 12px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.7s ease, color 0.7s ease;
+}
+.birth-bar .field input:focus {
+  border-color: #e8c77e;
+  box-shadow: 0 0 0 3px rgba(232, 199, 125, 0.22);
+}
+.birth-bar .cta {
+  flex: 0 0 auto;
+  width: auto;
+  padding: 11px 30px;
+  margin: 0;
+  font-family: var(--round-font);
+  font-size: 15px;
+  font-weight: 600;
+  color: #55432a;
+  background: linear-gradient(180deg, #f0d49b, #e8c77e);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(232, 199, 125, 0.35);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.birth-bar .cta:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(232, 199, 125, 0.5);
+}
+.birth-bar .cta:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.birth-bar .form-msg {
+  flex: 1 1 100%;
+  margin: 8px 0 0;
+  min-height: 1.1em;
+  font-size: 13px;
+  color: #c08b86;
+}
+.birth-bar .form-msg[aria-hidden="true"] {
+  visibility: hidden;
+}
+
+/* ===== 三栏布局：左控制 · 中星盘 · 右对话 =====
+   workspace 高度严格固定 = 视口 - 顶部表单 - 页脚，
+   两侧面板高度 = workspace 高度，超出部分由内部滚动条处理，
+   绝不随内容无限撑长。 */
+.workspace {
+  flex: 0 0 auto;
+  height: calc(100vh - 130px);
+  min-height: 540px;
+  display: flex;
+  gap: 18px;
+  align-items: stretch;
+  padding: 14px 0 18px;
+}
+/* ===== 中：星盘容器 =====
+   关键：flex: 0 0 auto —— 既不 grow 也不 shrink，宽度由 width 锁定。
+   原先的 flex: 1 1 auto（含 grow:1）会吃掉剩余空间，右侧一旦出现内容就把星盘挤位移。
+   同时禁止 margin-left:auto / space-between，任何情况下星盘都停在自己的格子里。 */
+.chart-zone {
+  flex: 0 0 auto;
+  width: min(600px, 52vw);
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== 右：常驻解读区 =====
+   独立 Flex 子项，负责渲染宫位/星体/相位解读。解读内容不再进入中列，
+   因此点击解读永远不会改变星盘位置。 */
+.reading-zone {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+/* 未选中任何项目时的占位提示 */
+.reading-empty {
+  margin: auto;
+  padding: 26px 22px;
+  text-align: center;
+  color: var(--chat-soft);
+  font-size: 13.5px;
+  line-height: 1.85;
+}
+.reading-empty-icon {
+  display: block;
+  font-size: 30px;
+  margin-bottom: 10px;
+  opacity: 0.55;
+}
+/* 左：星盘控制（固定高度，始终显示星星/月亮滚动条） */
+.control-panel {
+  flex: 0 0 248px;
+  align-self: stretch;
+  height: 100%;
+  min-height: 0;
+  overflow-y: scroll; /* 始终保留滚动条槽，哪怕内容未溢出 */
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  scrollbar-width: 10px;
+  scrollbar-color: var(--scroll-thumb) rgba(150, 120, 76, 0.16);
+}
+/* 自定义滚动条：白天滑块是小星星，夜晚是小月亮（见 --scroll-thumb-img） */
+.control-panel::-webkit-scrollbar {
+  width: 10px;
+}
+.control-panel::-webkit-scrollbar-track {
+  background: rgba(150, 120, 76, 0.16);
+  border-radius: 999px;
+  margin: 6px 0;
+}
+.control-panel::-webkit-scrollbar-thumb {
+  /* 先铺一层半透明淡色，确保滚动条始终可见；再叠星星/月亮图案 */
+  background-color: var(--scroll-thumb);
+  background-image: var(--scroll-thumb-img);
+  background-repeat: repeat-y;
+  background-position: center top;
+  background-size: 9px 9px;
+  min-height: 40px;
+  border-radius: 999px;
+  opacity: 1;
+  transition: opacity 0.3s ease, background-color 0.5s ease;
+}
+.control-panel::-webkit-scrollbar-thumb:hover {
+  background-color: var(--title-color);
+}
+
+/* ===== 右下角昼夜浮动球体（替代原右侧固定面板）===== */
+.fab-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: transparent;
+}
+.fab-sphere {
+  position: fixed;
+  z-index: 100;
+  width: 84px;
+  height: 84px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: grab;
+  touch-action: none;
+  animation: fab-float 3.4s ease-in-out infinite;
+  /* 发光由下方 .day / .night 的 box-shadow 负责；去掉深色 filter，避免配色发闷模糊 */
+  transition: transform 0.18s ease, box-shadow 0.5s ease;
+}
+/* 发光效果（严格按指定值）：白天暖黄光晕，夜晚淡紫光晕 */
+.fab-sphere.day { box-shadow: 0 0 15px 5px rgba(255, 217, 61, 0.5); }
+.fab-sphere.night { box-shadow: 0 0 15px 5px rgba(197, 183, 255, 0.5); }
+.fab-sphere:active {
+  cursor: grabbing;
+}
+.fab-sphere.dragging {
+  animation: none;
+  cursor: grabbing;
+}
+@keyframes fab-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+.fab-face {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+/* 白天：暖黄太阳 —— 圆润主体 #FFD93D + 短圆润光芒 #FFE566（stroke-linecap: round 保证不尖锐） */
+.fab-sun-core { fill: #FFD93D; }
+.fab-sun-ray { stroke: #FFE566; stroke-width: 7; stroke-linecap: round; }
+/* 夜晚：淡紫月牙 —— 本体 #C5B7FF + 外围柔光 #E0D6FF */
+.fab-moon-core { fill: #C5B7FF; }
+.fab-moon-glow { fill: #E0D6FF; opacity: 0.32; }
+/* 表情统一：黑色短竖线眼 || + 粉色爱心腮红（延续星座拟人画风） */
+.fab-eye { stroke: #3a2f28; stroke-width: 4; stroke-linecap: round; }
+.fab-blush { fill: #ff9fb2; }
+/* 昼夜只显示对应形态 */
+.fab-day-group, .fab-night-group { display: none; }
+.fab-sphere.day .fab-day-group { display: block; }
+.fab-sphere.night .fab-night-group { display: block; }
+
+.fab-window {
+  position: fixed;
+  z-index: 95;
+  width: min(340px, calc(100vw - 48px));
+  height: min(460px, calc(100vh - 160px));
+  display: flex;
+  flex-direction: column;
+  background: rgba(40, 38, 84, 0.62);
+  border: 1.5px solid rgba(176, 186, 228, 0.35);
+  border-radius: 22px;
+  box-shadow: 0 18px 50px rgba(8, 6, 26, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(14px) scale(0.96);
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+.fab-window.open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+.fab-head {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(176, 186, 228, 0.3);
+}
+.fab-head h2 {
+  margin: 0;
+  font-family: var(--serif-font);
+  font-size: 17px;
+  font-weight: 600;
+  color: #f0d49b;
+  letter-spacing: 0.04em;
+}
+.fab-head .fab-status {
+  margin-left: auto;
+  font-size: 12px;
+  color: rgba(210, 214, 238, 0.6);
+}
+.fab-head .fab-close {
+  margin-left: 6px;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(232, 199, 125, 0.16);
+  color: #f0d49b;
+  font-size: 14px;
+  cursor: pointer;
+}
+.fab-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 14px 10px 6px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scroll-thumb) transparent;
+}
+.fab-body::-webkit-scrollbar { width: var(--scroll-thumb-w); }
+.fab-body::-webkit-scrollbar-track { background: transparent; }
+.fab-body::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb);
+  background-image: var(--scroll-thumb-img);
+  background-repeat: repeat-y;
+  background-position: center top;
+  background-size: 9px 9px;
+  min-height: 28px;
+  border-radius: 999px;
+}
+.fab-empty {
+  margin: auto;
+  padding: 18px 20px;
+  text-align: center;
+  color: rgba(210, 214, 238, 0.6);
+  font-size: 13.5px;
+  line-height: 1.8;
+}
+.msg {
+  max-width: 86%;
+  padding: 9px 13px;
+  border-radius: 16px;
+  font-size: 13.5px;
+  line-height: 1.75;
+  white-space: pre-wrap;
+  word-break: break-word;
+  animation: fadein 0.28s ease;
+}
+.msg-ai {
+  align-self: flex-start;
+  background: rgba(46, 44, 92, 0.72);
+  color: rgba(245, 240, 230, 0.9);
+  border: 1px solid rgba(176, 186, 228, 0.3);
+  border-bottom-left-radius: 5px;
+}
+.msg-user {
+  align-self: flex-end;
+  background: rgba(232, 199, 125, 0.2);
+  color: #f3ead0;
+  border-bottom-right-radius: 5px;
+  font-weight: 500;
+}
+.fab-suggest {
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding: 8px 14px 0;
+}
+.fab-chip {
+  font-family: var(--round-font);
+  font-size: 12.5px;
+  color: #f0d49b;
+  background: transparent;
+  border: 1px solid rgba(176, 186, 228, 0.3);
+  border-radius: 999px;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+.fab-chip:hover {
+  background: rgba(232, 199, 125, 0.2);
+  transform: translateY(-1px);
+}
+.fab-input {
+  flex: 0 0 auto;
+  display: flex;
+  gap: 8px;
+  padding: 10px 14px 14px;
+  border-top: 1px solid rgba(176, 186, 228, 0.3);
+}
+.fab-input textarea {
+  flex: 1 1 auto;
+  resize: none;
+  font-family: var(--round-font);
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(245, 240, 230, 0.92);
+  background: rgba(26, 26, 58, 0.55);
+  border: 1.5px solid rgba(150, 162, 212, 0.4);
+  border-radius: 14px;
+  padding: 9px 12px;
+  outline: none;
+  max-height: 96px;
+}
+.fab-input textarea:focus {
+  border-color: #e8c77e;
+  box-shadow: 0 0 0 3px rgba(232, 199, 125, 0.22);
+}
+.fab-input textarea::placeholder { color: rgba(210, 214, 238, 0.55); }
+.fab-send {
+  flex: 0 0 auto;
+  align-self: flex-end;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 14px;
+  background: var(--chat-send-bg);
+  color: var(--chat-send-text);
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(232, 199, 125, 0.32);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+}
+.fab-send:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(232, 199, 125, 0.5);
+}
+.fab-send:disabled { opacity: 0.6; cursor: wait; }
+
+/* 中心星座切换：12 小圆点，绝对定位在星盘下方，不占文档流 */
+.sign-switcher {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  gap: 6px;
+  padding: 6px 10px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.sign-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--dot, #c4b89e);
+  background: transparent;
+  color: var(--panel-text);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+.sign-dot:hover { transform: translateY(-2px); }
+.sign-dot.active {
+  background: var(--dot, #c4b89e);
+  color: #fffdf5;
+  box-shadow: 0 0 8px var(--dot, rgba(0, 0, 0, 0.3));
+}
+
+@media (max-width: 1100px) {
+  .control-panel { flex-basis: 226px; }
+}
+@media (max-width: 980px) {
+  .workspace { flex-direction: column; align-items: center; height: auto; }
+  .control-panel {
+    position: static;
+    width: 100%;
+    flex: none;
+    align-self: auto;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+  }
+  /* 窄屏纵向堆叠：星盘与解读区各自占满整行，避开 min(600px,52vw) 被压扁 */
+  .chart-zone { width: 100%; height: auto; }
+  .reading-zone { width: 100%; height: auto; }
+}
+
+/* ===== 星盘 ===== */
+.wheel-block {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.stage {
+  position: relative;
+  width: 100%;
+  max-width: min(720px, calc(100vh - 220px));
+  aspect-ratio: 1/1;
+}
+.stage svg.wheel {
+  width: 100%;
+  height: 100%;
+  display: block;
+  animation: floaty 3.6s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes floaty {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-7px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stage svg.wheel {
+    animation: none;
+  }
+}
+
+/* 盘面与宫位：边界清晰干净，无泛光溢出 */
+.ring-in {
+  filter: none;
+}
+/* 实体盘面：保留实色底，边缘锐利，只有一层极淡的深色投影托底 */
+.disk {
+  fill: var(--disk-fill);
+  stroke: var(--disk-stroke);
+  stroke-width: 2;
+  filter: var(--disk-shadow);
+  transition: fill 0.7s ease, stroke 0.7s ease, filter 0.7s ease;
+}
+.house-pastel {
+  stroke: none;
+  cursor: pointer;
+  transition: fill 0.2s ease;
+}
+.house-a {
+  fill: var(--house-a);
+}
+.house-b {
+  fill: var(--house-b);
+}
+.house-pastel:hover {
+  fill: rgba(232, 199, 125, 0.22);
+}
+.cusp-line {
+  stroke: var(--cusp-line);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  pointer-events: none;
+  transition: stroke 0.7s ease;
+}
+/* 雕版装饰：细同心圆 + 刻度环（1.5~2px，随主题微光） */
+.engrave-circle {
+  fill: none;
+  stroke: var(--engrave-soft);
+  stroke-width: 1.5;
+  pointer-events: none;
+  transition: stroke 0.7s ease;
+}
+.engrave-circle.strong {
+  stroke: var(--engrave);
+  stroke-width: 2;
+}
+.tick {
+  stroke: var(--engrave-soft);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  pointer-events: none;
+  transition: stroke 0.7s ease;
+}
+.tick.major {
+  stroke: var(--engrave);
+  stroke-width: 1.8;
+}
+/* 弧形宫位文字（SVG textPath 沿外圈弧线排列），淡暖色、透明度 0.8 */
+.house-arc-label {
+  fill: var(--house-arc);
+  opacity: 0.8;
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  user-select: none;
+  transition: fill 0.7s ease;
+}
+/* 星轨：星体轨道内外各一条细线，1px，极淡同色系发光 */
+.orbit-track {
+  fill: none;
+  stroke: var(--orbit-line);
+  stroke-width: 1;
+  filter: drop-shadow(0 0 1.5px var(--deco-glow));
+  pointer-events: none;
+  transition: stroke 0.7s ease;
+}
+/* 内环装饰：星月与四角星，细线无填充、透明度 0.26，仅隐约点缀 */
+.deco-band {
+  pointer-events: none;
+  user-select: none;
+}
+.deco {
+  fill: none;
+  stroke: var(--deco-ink);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.deco-band {
+  opacity: 0.26;
+  filter: drop-shadow(0 0 1.6px var(--deco-glow));
+  transition: opacity 0.7s ease;
+}
+/* ===== 中心拟人形象（HTML <img> 绝对定位叠在 SVG 星盘中心上方）=====
+   严格约束：
+   - 不包任何 border-radius / border 容器（禁止圆形挖空）
+   - 不设任何实色背景，background: none（透明底必须透出星盘）
+   - 尺寸用百分比随 stage 等比缩放：20% × viewBox 760 = 152 单位
+     → 占内圈半径 R_DISK(318) 的 47.8%，落在 45%~52% 区间
+   - 边缘仅用 mask-image: radial-gradient 极淡羽化                */
+.center-avatar-wrap {
+  /* 布局居中用 inset+margin:auto，绝不用 transform——
+     transform 会被 floaty 关键帧整体覆盖，导致负 50% 居中位移失效而偏心 */
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  /* 角色已归一为画布 90%：20% × 760 = 152 单位，视觉最大边 ≈ 137 ÷ 内圈 318 = 43%，≤ 45% */
+  width: 20%;
+  height: 20%;
+  pointer-events: none;
+  z-index: 5;
+  background: none;
+  border: none;
+  /* 与 SVG 星盘同步轻微浮动（此时 transform 仅承担浮动位移，不影响居中） */
+  animation: floaty 3.6s ease-in-out infinite alternate;
+}
+@media (prefers-reduced-motion: reduce) {
+  .center-avatar-wrap {
+    animation: none;
+  }
+}
+/* 拟人图本体：纯 contain 渲染透明 PNG，无任何圆角/边框/背景 */
+.center-avatar-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: none;
+  border: none;
+  border-radius: 0;
+  -webkit-user-select: none;
+  user-select: none;
+  /* 边缘不做任何 mask/羽化：图已是透明底 + 已去白边，mask 反而会啃掉羊角与脚部 */
+  /* 轻微立体投影（保持之前要的浮起质感，非背景） */
+  filter: drop-shadow(0 3px 7px rgba(70, 48, 26, 0.22));
+}
+/* 图片缺失时的兜底：仅文字，不做圆形徽标 */
+.center-avatar-fallback {
+  display: block;
+  width: 100%;
+  height: 100%;
+  line-height: 1;
+  text-align: center;
+  font-family: var(--round-font);
+  font-size: clamp(13px, 2.2vw, 20px);
+  font-weight: 700;
+  color: var(--title-color);
+  background: none;
+  border: none;
+}
+/* 解读卡头部落座小图：圆形徽标，与中心像同源（透明图，contain 完整显示） */
+.rc-sign-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: contain;
+  vertical-align: -8px;
+  margin-right: 8px;
+  border: 1px solid var(--center-ring);
+  background: var(--egg-bg);
+}
+
+/* 相位连线：细线、默认不发光，hover 发光 */
+.aspect {
+  cursor: pointer;
+}
+.aspect-vis {
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  pointer-events: none;
+  /* 默认极弱同色微光，hover 时由 .aspect:hover 规则加粗加强发光 */
+  filter: drop-shadow(0 0 2px rgba(120, 100, 70, 0.3));
+  transition: stroke 0.7s ease, filter 0.15s ease, stroke-width 0.15s ease;
+}
+/* 五种主相位各自一种颜色（角度即配色），次要相位淡虚线 */
+.asp-conj {
+  stroke: var(--asp-conj);
+}
+.asp-sex {
+  stroke: var(--asp-sex);
+}
+.asp-sqr {
+  stroke: var(--asp-sqr);
+}
+.asp-tri {
+  stroke: var(--asp-tri);
+}
+.asp-opp {
+  stroke: var(--asp-opp);
+}
+.asp-minor {
+  stroke: var(--asp-minor);
+  stroke-dasharray: 3 4;
+}
+.aspect:hover .asp-conj {
+  filter: drop-shadow(0 0 4px var(--asp-conj));
+  stroke-width: 2.2;
+}
+.aspect:hover .asp-sex {
+  filter: drop-shadow(0 0 4px var(--asp-sex));
+  stroke-width: 2.2;
+}
+.aspect:hover .asp-sqr {
+  filter: drop-shadow(0 0 4px var(--asp-sqr));
+  stroke-width: 2.2;
+}
+.aspect:hover .asp-tri {
+  filter: drop-shadow(0 0 4px var(--asp-tri));
+  stroke-width: 2.2;
+}
+.aspect:hover .asp-opp {
+  filter: drop-shadow(0 0 4px var(--asp-opp));
+  stroke-width: 2.2;
+}
+.aspect:hover .asp-minor {
+  filter: drop-shadow(0 0 3px var(--asp-minor));
+  stroke-width: 2;
+}
+.aspect-hit {
+  stroke: transparent;
+  stroke-width: 12;
+  pointer-events: all;
+  cursor: pointer;
+}
+
+/* 星体球体：常亮发光；汉字颜色由组件按球色明暗自适应（暗球白字 / 亮球深字） */
+.planet {
+  cursor: pointer;
+}
+.pt-dot {
+  filter: drop-shadow(0 0 9px var(--pg, rgba(0, 0, 0, 0.3)));
+  transition: filter 0.18s ease;
+}
+.planet:hover .pt-dot {
+  filter: drop-shadow(0 0 14px var(--pg, rgba(0, 0, 0, 0.3))) brightness(1.12);
+}
+.pt-symbol {
+  font-weight: 600;
+  paint-order: stroke;
+  stroke: rgba(255, 255, 255, 0.55);
+  stroke-width: 0.5;
+  pointer-events: none;
+  dominant-baseline: central;
+  user-select: none;
+}
+
+/* 星星点点出现时的柔和淡入 */
+.planet,
+.aspect {
+  animation: fadein 0.32s ease;
+}
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 未生成 */
+.empty-cute {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+}
+.empty-cute .egg {
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 52px;
+  border: 3px dashed var(--egg-border);
+  border-radius: 50%;
+  background: var(--egg-bg);
+  transition: border-color 0.7s ease, background 0.7s ease;
+}
+.empty-cute p {
+  max-width: 260px;
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 15px;
+  line-height: 1.7;
+  transition: color 0.7s ease;
+}
+
+.birthline {
+  margin: 8px 0 0;
+  font-size: 13.5px;
+  color: var(--text-soft);
+  text-align: center;
+  min-height: 1.4em;
+  transition: color 0.7s ease;
+}
+.birthline b {
+  color: var(--title-color);
+  font-weight: 400;
+  transition: color 0.7s ease;
+}
+
+/* ===== 左侧控制面板（次要，收窄留白、弱化标题以突出星盘）===== */
+.control-panel {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid var(--card-border);
+  border-radius: 18px;
+  padding: 12px 12px 10px;
+  box-shadow: var(--card-shadow);
+  transition: background 0.7s ease, border-color 0.7s ease, box-shadow 0.7s ease;
+}
+.control-panel h2 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--panel-soft);
+  transition: color 0.7s ease;
+}
+.cp-block {
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--panel-divider);
+  margin-bottom: 8px;
+  transition: border-color 0.7s ease;
+}
+.cp-group {
+  margin-bottom: 6px;
+}
+.cp-group h3 {
+  margin: 8px 0 4px;
+  font-size: 12px;
+  color: var(--panel-soft);
+  letter-spacing: 0.04em;
+  transition: color 0.7s ease;
+}
+.cp-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 3px 1px;
+}
+.cp-label {
+  flex: 1;
+  font-size: 12.5px;
+  color: var(--panel-text);
+  transition: color 0.7s ease;
+}
+.cp-name {
+  flex: 1;
+  font-size: 12.5px;
+  color: var(--panel-text);
+  transition: color 0.7s ease;
+}
+.cp-hint {
+  margin: 5px 0 0;
+  font-size: 11px;
+  color: var(--panel-soft);
+  transition: color 0.7s ease;
+}
+.cp-row .dot {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  box-shadow: 0 0 6px rgba(240, 212, 155, 0.35);
+}
+/* 与盘面一致的立体小球 + 单汉字 */
+.cp-row .dot.orb {
+  color: #fffdf5;
+  font-weight: 600;
+  font-size: 11px;
+  text-shadow: 0 1px 1px rgba(60, 40, 20, 0.35);
+  background: radial-gradient(
+    circle at 35% 30%,
+    color-mix(in srgb, var(--pg, #c4b89e) 45%, #ffffff) 0%,
+    var(--pg, #c4b89e) 48%,
+    color-mix(in srgb, var(--pg, #c4b89e) 62%, #2a2020) 100%
+  );
+  box-shadow: 0 0 7px var(--pg, rgba(0, 0, 0, 0.25)), inset 0 -1px 2px rgba(40, 25, 15, 0.25);
+}
+
+/* 圆角 Toggle */
+.switch {
+  width: 44px;
+  height: 24px;
+  flex: none;
+  border-radius: 999px;
+  border: 2px solid var(--switch-off-border);
+  background: var(--switch-off-bg);
+  padding: 2px;
+  cursor: pointer;
+  transition: background 0.7s ease, border-color 0.7s ease, box-shadow 0.2s ease;
+}
+.switch .knob {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  transition: transform 0.2s ease;
+}
+.switch.on {
+  background: linear-gradient(180deg, #f0d49b, #e8c77e);
+  border-color: #d4b361;
+  box-shadow: 0 0 8px rgba(232, 199, 125, 0.55);
+}
+.switch.on .knob {
+  transform: translateX(20px);
+}
+
+/* ===== 解读卡片：毛玻璃（昼夜各一套）===== */
+.reading-card {
+  position: relative;
+  margin: 0;
+  z-index: 8;
+  width: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  background: var(--rc-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid var(--rc-border);
+  border-radius: 18px;
+  padding: 16px 20px 14px;
+  box-shadow: var(--rc-shadow);
+  animation: card-in 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: background 0.7s ease, border-color 0.7s ease, box-shadow 0.7s ease;
+}
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.reading-card h3 {
+  margin: 0 26px 6px 0;
+  font-size: 19px;
+  color: var(--rc-title);
+}
+/* 解读卡标题里的迷你星体球（与盘面一致） */
+.reading-card .head-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  margin-right: 7px;
+  border-radius: 50%;
+  color: #fffdf5;
+  font-size: 12px;
+  font-weight: 600;
+  vertical-align: -5px;
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.18);
+}
+.reading-card .rc-sub {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--rc-sub);
+}
+/* 星体落位信息：位于第 N 宫 · 星座 X°Y′ */
+.reading-card .rc-place {
+  margin: 0 0 10px;
+  padding: 7px 11px;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  color: var(--rc-strong);
+  background: var(--rc-place-bg);
+  border: 1px solid var(--rc-place-border);
+  border-radius: 999px;
+  display: inline-block;
+}
+.reading-card .rc-text {
+  margin: 0 0 10px;
+  font-size: 15px;
+  line-height: 1.95;
+  letter-spacing: 0.01em;
+  color: var(--rc-text);
+}
+.reading-card .rc-text:last-child {
+  margin-bottom: 2px;
+}
+.reading-card .rc-text b {
+  color: var(--rc-strong);
+  font-weight: 600;
+}
+.reading-card .rc-empty {
+  margin: 0;
+  font-size: 14px;
+  color: var(--rc-empty-text);
+  padding: 12px;
+  background: var(--rc-empty-bg);
+  border-radius: 10px;
+}
+.card-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background: var(--close-bg);
+  color: var(--close-color);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.card-close:hover {
+  background: rgba(232, 199, 125, 0.3);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reading-card {
+    animation: none;
+  }
+}
+
+/* ===== 页脚 ===== */
+footer.foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 8px 0 14px;
+  border-top: 1.5px solid var(--card-border);
+  font-size: 12px;
+  color: var(--text-soft);
+  transition: color 0.7s ease, border-color 0.7s ease;
+}
